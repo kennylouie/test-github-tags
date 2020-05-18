@@ -24,8 +24,7 @@ jobs:
           echo "::set-env name=BRANCH_TAG::${BRANCH_TAG#v*}"
           echo ${{ env.BRANCH_TAG }}
 
-          git checkout origin/master
-          MASTER_TAG=$(git describe)
+          MASTER_TAG=$(git describe origin/master)
           echo "::set-env name=MASTER_TAG::${MASTER_TAG#v*}"
           echo ${{ env.MASTER_TAG }}
 
@@ -34,6 +33,7 @@ jobs:
           echo "Incrementing tag patch"
           echo ${{ env.MASTER_TAG }}
           echo ${{ env.BRANCH_TAG }}
+          [ "${{ env.BRANCH_TAG }}" != "$(echo -e "${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }}" | sort -V | head -n1)" ] || exit 1
 
       - name: Build Image
         run: |
