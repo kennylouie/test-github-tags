@@ -22,7 +22,7 @@ jobs:
       - name: Get tag
       - run: |
         echo "Getting tag"
-        echo "${GITHUB_REF}"
+        echo $GITHUB_REF
         echo "::set-env name=TAG::${GITHUB_REF##*/}"
         [ -z "${{ env.TAG }}" ] && exit 1
         echo "${{ env.TAG }}"
