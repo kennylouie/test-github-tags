@@ -17,10 +17,9 @@ jobs:
 
       - name: Get tag
         run: |
-          ls
-          git fetch --tags
-          git describe
           echo "Getting tag"
+          git fetch --prune --unshallow
+          git describe
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           echo $VERSION
 
