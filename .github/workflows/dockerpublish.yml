@@ -15,9 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get tag
+      - name: Get tags
         run: |
-          echo "Getting tag"
+          echo "Getting tags of branch and master"
+
           git fetch --prune --unshallow
 
           BRANCH_TAG=$(git describe)
@@ -32,18 +33,19 @@ jobs:
 
       - name: Check tag is higher than master
         run: |
-          echo "Checking tag is higher"
-          echo ${{ env.MASTER_TAG }}
-          echo ${{ env.BRANCH_TAG }}
-          [ "${{ env.BRANCH_TAG }}" != "$(echo -e "${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }}" | sort -V | head -n1)" ] || exit 1
+          echo "Checking tag is higher in branch"
+
+          echo "master is ${{ env.MASTER_TAG }}"
+          echo "branch is ${{ env.BRANCH_TAG }}"
+          [ "${{ env.BRANCH_TAG }}" != "$(echo -e "${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }}" | sort -V | head -n1)" ] || echo "branch tag is not higher than master's" && exit 1
 
       - name: Build Image
         run: |
           echo "Building docker image"
 
-      - name: Build Image
+      - name: Tag Image
         run: |
-          echo "Building docker image"
+          echo "Tagging docker image"
 
       - name: Push to registry
         run: |
