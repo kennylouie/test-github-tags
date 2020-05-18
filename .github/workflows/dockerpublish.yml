@@ -22,7 +22,7 @@ jobs:
           echo $TAG
           echo ::set-env name=TAG::${GITHUB_REF:10}
           echo $IMAGE_NAME:${{ env.TAG }}
-          [ 1 == 2 ] && echo "no"
+          [ 1 == 2 ] || exit 1
           [ 1 == 1 ] && echo "yes"
             
   push:
