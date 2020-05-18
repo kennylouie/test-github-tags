@@ -1,0 +1,34 @@
+name: Docker
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  IMAGE_NAME: test_github_tags
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: get tag number
+        run: |
+          - echo ${GITHUB_REF##*/}
+          - [ 1 == 2 ] && echo "no"
+          - [ 1 == 1 ] && echo "yes"
+            
+  push:
+    needs: tag
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: check tag is higher
+        run: |
+          - echo "next step"
