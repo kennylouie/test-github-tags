@@ -13,8 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Get tag
         run: |
+          ls
+          git describe
           echo "Getting tag"
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           echo $VERSION
@@ -22,6 +26,7 @@ jobs:
       - name: Increment tag patch
         run: |
           echo "Incrementing tag patch"
+          echo $VERSION
 
       - name: Build Image
         run: |
