@@ -17,12 +17,12 @@ jobs:
 
       - name: get tag number
         run: |
-          - echo ${GITHUB_REF##*/}
-          - echo $IMAGE_NAME
-          - $IMAGE_NAME='changed'
-          - echo $IMAGE_NAME
-          - [ 1 == 2 ] && echo "no"
-          - [ 1 == 1 ] && echo "yes"
+          echo ${GITHUB_REF##*/}
+          echo $IMAGE_NAME
+          $IMAGE_NAME='changed'
+          echo $IMAGE_NAME
+          [ 1 == 2 ] && echo "no"
+          [ 1 == 1 ] && echo "yes"
             
   push:
     needs: tag
@@ -34,4 +34,4 @@ jobs:
       
       - name: check tag is higher
         run: |
-          - echo "next step"
+          echo "next step"
