@@ -15,6 +15,6 @@ jobs:
     steps:
       - uses: kennylouie/dkr_pub@v0.0.1
         with:
-          name: $IMAGE_NAME
+          name: ${{ env.IMAGE_NAME }}
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
