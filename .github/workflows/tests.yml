@@ -1,11 +1,11 @@
 name: Tests on PRs
 
 on:
-  pull_request:
-    branches:
-      - master
+  push:
     tags:
       - v*
+
+  pull_request:
 
 jobs:
   ruby:
