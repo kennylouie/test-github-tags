@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/rusty-docker-publish@0.0.1
+      - uses: kennylouie/rusty-docker-publish@0.0.1
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - uses: actions/checkout@v2
       - name: Get tag of current branch
         run: |
           echo $GITHUB_REF
