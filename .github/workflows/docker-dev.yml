@@ -4,14 +4,12 @@ on:
   push:
     branches:
       - master
-    tags:
-      - v*
 
 env:
   IMAGE_NAME: test_github_tags
 
 jobs:
-  tags:
+  docker:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,6 +35,6 @@ jobs:
           docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ env.MASTER_TAG }}
 
           echo "Pushing image to registry"
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:${{ env.MASTER_TAG }}

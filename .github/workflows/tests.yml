@@ -3,6 +3,9 @@ name: Tests on PRs
 on:
   pull_request:
 
+  push: tags:
+      - v*
+
 jobs:
   ruby:
     runs-on: ubuntu-latest
