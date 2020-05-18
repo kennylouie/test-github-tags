@@ -21,16 +21,18 @@ jobs:
           git fetch --prune --unshallow
 
           BRANCH_TAG=$(git describe)
-          echo "::set-env name=BRANCH_TAG::${BRANCH_TAG#v*}"
-          echo ${{ env.BRANCH_TAG }}
+          BRANCH_TAG=${BRANCH_TAG#v*}
+          BRANCH_TAG=${BRANCH_TAG%%-*}
+          echo "::set-env name=BRANCH_TAG::${BRANCH_TAG}"
 
           MASTER_TAG=$(git describe origin/master)
-          echo "::set-env name=MASTER_TAG::${MASTER_TAG#v*}"
-          echo ${{ env.MASTER_TAG }}
+          MASTER_TAG=${MASTER_TAG#v*}
+          MASTER_TAG=${MASTER_TAG%%-*}
+          echo "::set-env name=MASTER_TAG::${MASTER_TAG}"
 
       - name: Check tag is higher than master
         run: |
-          echo "Incrementing tag patch"
+          echo "Checking tag is higher"
           echo ${{ env.MASTER_TAG }}
           echo ${{ env.BRANCH_TAG }}
           [ "${{ env.BRANCH_TAG }}" != "$(echo -e "${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }}" | sort -V | head -n1)" ] || exit 1
