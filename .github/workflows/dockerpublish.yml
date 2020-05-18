@@ -21,10 +21,10 @@ jobs:
           echo ::set-env name=TAG::${GITHUB_REF#refs/*/}
           [ -z ${{ env.TAG}} ] && echo "no tag set" && exit 1
           echo $IMAGE_NAME:${{ env.TAG }}
-          
+
       - name: Log into registry
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          
+
       - name: Get tag of last release
         run: |
           docker images
