@@ -1,0 +1,40 @@
+name: Publish Dev
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  IMAGE_NAME: test_github_tags
+
+jobs:
+  tags:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get tag
+        run: |
+          echo "Getting tag of master"
+
+          git fetch --prune --unshallow
+
+          MASTER_TAG=$(git describe origin/master)
+          MASTER_TAG=${MASTER_TAG#v*}
+          MASTER_TAG=${MASTER_TAG%%-*}
+          echo "::set-env name=MASTER_TAG::${MASTER_TAG}"
+
+      - name: Publish docker image
+        run: |
+          echo "Building docker image"
+          docker build -t $IMAGE_NAME:latest .
+
+          echo "Tagging docker image"
+          docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ env.MASTER_TAG }}
+
+          echo "Pushing image to registry"
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:${{ env.MASTER_TAG }}
