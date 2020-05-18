@@ -22,7 +22,7 @@ jobs:
           echo $IMAGE_NAME:${{ env.TAG }}
           
       - name: Log into registry
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrents.DOCKERHUB_USER }} --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
           
       - name: Get tag of last release
         run: |
