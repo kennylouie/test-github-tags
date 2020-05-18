@@ -17,6 +17,7 @@ jobs:
 
       - name: Get tag of current branch
         run: |
+          echo $GITHUB_REF
           echo ::set-env name=TAG::${GITHUB_REF#refs/*/}
           [ -z ${{ env.TAG}} ] && echo "no tag set" && exit 1
           echo $IMAGE_NAME:${{ env.TAG }}
