@@ -1,4 +1,4 @@
-name: Docker
+name: Publish Dev
 
 on:
   push:
@@ -9,12 +9,40 @@ env:
   IMAGE_NAME: test_github_tags
 
 jobs:
-  tag:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: kennylouie/dkr_pub@v0.0.1
-        with:
-          name: ${{ env.IMAGE_NAME }}
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Ruby tests
+
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get tag
+      - run: |
+        echo "Getting tag"
+        echo "${GITHUB_REF}"
+        echo "::set-env name=TAG::${GITHUB_REF##*/}"
+        [ -z "${{ env.TAG }}" ] && exit 1
+        echo "${{ env.TAG }}"
+
+    steps:
+      - name: Increment tag patch
+      - run: |
+        echo "Incrementing tag patch"
+
+    steps:
+      - name: Build Image
+      - run: |
+        echo "Building docker image"
+
+    steps:
+      - name: Build Image
+      - run: |
+        echo "Building docker image"
+
+    steps:
+      - name: Push to registry
+      - run: |
+        echo "Pushing image to registry"
