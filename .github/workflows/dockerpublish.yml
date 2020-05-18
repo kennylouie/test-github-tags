@@ -15,24 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: get tag number
+      - name: Get tag of current branch
         run: |
-          echo ${GITHUB_REF##*/}
-          echo $IMAGE_NAME
-          echo $TAG
-          echo ::set-env name=TAG::${GITHUB_REF:10}
+          echo ::set-env name=TAG::${GITHUB_REF#refs/*/}
+          [ -z ${{ env.TAG}} ] && echo "no tag set" && exit 1
           echo $IMAGE_NAME:${{ env.TAG }}
-          [ 1 == 2 ] || exit 1
-          [ 1 == 1 ] && echo "yes"
-            
-  push:
-    needs: tag
-    
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: check tag is higher
+          
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrents.DOCKERHUB_USER }} --password-stdin
+          
+      - name: Get tag of last release
         run: |
-          echo "next step"
+          docker images
