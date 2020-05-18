@@ -22,10 +22,8 @@ jobs:
       - name: Get tag
       - run: |
         echo "Getting tag"
-        echo $GITHUB_REF
-        echo "::set-env name=TAG::${GITHUB_REF##*/}"
-        [ -z "${{ env.TAG }}" ] && exit 1
-        echo "${{ env.TAG }}"
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        echo $VERSION
 
     steps:
       - name: Increment tag patch
