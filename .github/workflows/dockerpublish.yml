@@ -1,7 +1,7 @@
 name: Publish Dev
 
 on:
-  push:
+  pull_request:
     branches:
       - master
 
@@ -19,14 +19,21 @@ jobs:
         run: |
           echo "Getting tag"
           git fetch --prune --unshallow
-          git describe
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          echo $VERSION
 
-      - name: Increment tag patch
+          BRANCH_TAG=$(git describe)
+          echo "::set-env name=BRANCH_TAG::${BRANCH_TAG#v*}"
+          echo ${{ env.BRANCH_TAG }}
+
+          git checkout origin/master
+          MASTER_TAG=$(git describe)
+          echo "::set-env name=MASTER_TAG::${MASTER_TAG#v*}"
+          echo ${{ env.MASTER_TAG }}
+
+      - name: Check tag is higher than master
         run: |
           echo "Incrementing tag patch"
-          echo $VERSION
+          echo ${{ env.MASTER_TAG }}
+          echo ${{ env.BRANCH_TAG }}
 
       - name: Build Image
         run: |
