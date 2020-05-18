@@ -45,5 +45,5 @@ jobs:
           echo "master is ${{ env.MASTER_TAG }}"
           echo "branch is ${{ env.BRANCH_TAG }}"
           echo -e "${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }}"
-          echo -e "${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }} | sort -V | head -n1"
-          [ "${{ env.BRANCH_TAG }}" != "$(echo -e ${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }} | sort -V | head -n1)" ] && exit 1
+          echo -e "${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }}" | sort -V | head -n1
+          [ "${{ env.BRANCH_TAG }}" != "$(echo -e ${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }} | sort -V | head -n1)" ] || exit 1
