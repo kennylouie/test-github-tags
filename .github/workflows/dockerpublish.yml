@@ -14,33 +14,34 @@ jobs:
 
     steps:
       - name: Ruby tests
+        run: echo "Running ruby tests"
 
   docker:
     runs-on: ubuntu-latest
 
     steps:
       - name: Get tag
-      - run: |
-        echo "Getting tag"
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-        echo $VERSION
+        run: |
+          echo "Getting tag"
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          echo $VERSION
 
     steps:
       - name: Increment tag patch
-      - run: |
-        echo "Incrementing tag patch"
+        run: |
+          echo "Incrementing tag patch"
 
     steps:
       - name: Build Image
-      - run: |
-        echo "Building docker image"
+        run: |
+          echo "Building docker image"
 
     steps:
       - name: Build Image
-      - run: |
-        echo "Building docker image"
+        run: |
+          echo "Building docker image"
 
     steps:
       - name: Push to registry
-      - run: |
-        echo "Pushing image to registry"
+        run: |
+          echo "Pushing image to registry"
