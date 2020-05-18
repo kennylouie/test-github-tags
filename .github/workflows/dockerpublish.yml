@@ -19,8 +19,9 @@ jobs:
         run: |
           echo ${GITHUB_REF##*/}
           echo $IMAGE_NAME
-          echo "::set-env IMAGE_NAME=action_state::changed"
-          echo $IMAGE_NAME
+          echo $TAG
+          echo ::set-env name=TAG::${GITHUB_REF:10}
+          echo $IMAGE_NAME:${{ env.TAG }}
           [ 1 == 2 ] && echo "no"
           [ 1 == 1 ] && echo "yes"
             
