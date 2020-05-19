@@ -2,6 +2,8 @@ name: Publish Prod
 
 on:
   release:
+    tags:
+      - v*
 
 env:
   IMAGE_NAME: test_github_tags
