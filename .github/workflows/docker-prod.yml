@@ -2,7 +2,8 @@ name: Build Prod
 
 on:
   release:
-    types: [published]
+    tags:
+      - v*
 
 env:
   IMAGE_NAME: kennylouie/gha
