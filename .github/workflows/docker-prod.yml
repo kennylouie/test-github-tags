@@ -15,6 +15,9 @@ jobs:
 
       - name: Get tag from release
         run: |
-          echo "Getting tag of master"
-          echo $GITHUB_REF
-          printenv
+          echo "Getting tag from release"
+          echo github ref is $GITHUB_REF
+          TAG=${GITHUB_REF##v*}
+          TAG=${TAG##*/}
+          echo tag is $TAG
+          echo "::set-env name=TAG::${TAG}"
