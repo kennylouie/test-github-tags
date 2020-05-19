@@ -2,8 +2,7 @@ name: Publish Prod
 
 on:
   release:
-    tags:
-      - v*
+    types: [published]
 
 env:
   IMAGE_NAME: test_github_tags
@@ -18,4 +17,5 @@ jobs:
       - name: Get tag from release
         run: |
           echo "Getting tag of master"
+          echo $GITHUB_REF
           printenv
