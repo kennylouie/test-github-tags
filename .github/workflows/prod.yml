@@ -1,4 +1,4 @@
-name: Publish Prod
+name: build prod
 
 on:
   release:
