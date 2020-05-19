@@ -1,0 +1,43 @@
+name: Tests on PRs
+
+on:
+  pull_request:
+
+jobs:
+  ruby:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run ruby tests
+        run: |
+          echo "Running ruby tests"
+
+  tags:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get tags
+        run: |
+          echo "Getting tags of branch and master"
+
+          git fetch --prune --unshallow
+
+          BRANCH_TAG=$(git describe)
+          BRANCH_TAG=${BRANCH_TAG#v*}
+          BRANCH_TAG=${BRANCH_TAG%%-*}
+          echo "::set-env name=BRANCH_TAG::${BRANCH_TAG}"
+
+          MASTER_TAG=$(git describe origin/master)
+          MASTER_TAG=${MASTER_TAG#v*}
+          MASTER_TAG=${MASTER_TAG%%-*}
+          echo "::set-env name=MASTER_TAG::${MASTER_TAG}"
+
+      - name: Check tag is higher than master
+        run: |
+          echo "Checking tag is higher in branch"
+
+          echo "master is ${{ env.MASTER_TAG }}"
+          echo "branch is ${{ env.BRANCH_TAG }}"
+          [ "${{ env.BRANCH_TAG }}" != "$(echo -e ${{ env.BRANCH_TAG }}\n${{ env.MASTER_TAG }} | sort -V | head -n1)" ] || exit 1
