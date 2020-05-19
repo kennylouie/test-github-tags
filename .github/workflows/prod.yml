@@ -1,4 +1,4 @@
-name: build prod
+name: Build Prod
 
 on:
   release:
@@ -20,3 +20,7 @@ jobs:
           TAG=${TAG##*/}
           echo tag is $TAG
           echo "::set-env name=TAG::${TAG}"
+
+      - name: Get tag
+        run: |
+          echo ${{ env.TAG }}
