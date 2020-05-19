@@ -1,0 +1,32 @@
+name: Build Prod
+
+on:
+  release:
+    types: [published]
+
+env:
+  IMAGE_NAME: kennylouie/gha
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get tag
+        run: |
+          echo "Getting tag from release"
+          echo github ref is $GITHUB_REF
+          TAG=${GITHUB_REF##v*}
+          TAG=${TAG##*/}
+          echo tag is $TAG
+          echo "::set-env name=TAG::${TAG}"
+
+      - name: Pull publish image
+        run: |
+          echo ${{ env.TAG }}
+          docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+          docker pull $IMAGE_NAME:${{ env.TAG }}
+          docker tag $IMAGE_NAME:${{ env.TAG }} $IMAGE_NAME:prod
+
+          docker push $IMAGE_NAME:prod
