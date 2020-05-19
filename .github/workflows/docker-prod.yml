@@ -1,1 +1,19 @@
 name: Publish Prod
+
+on:
+  release:
+
+env:
+  IMAGE_NAME: test_github_tags
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get tag from release
+        run: |
+          echo "Getting tag of master"
+          printenv

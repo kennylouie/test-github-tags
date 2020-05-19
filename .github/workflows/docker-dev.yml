@@ -28,13 +28,9 @@ jobs:
 
       - name: Publish docker image
         run: |
-          echo "Building docker image"
+          echo "Build, tag, and publish docker image"
           docker build -t $IMAGE_NAME:latest .
-
-          echo "Tagging docker image"
           docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ env.MASTER_TAG }}
-
-          echo "Pushing image to registry"
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:${{ env.MASTER_TAG }}
