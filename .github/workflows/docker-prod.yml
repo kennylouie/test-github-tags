@@ -2,6 +2,10 @@ name: Publish Prod
 
 on:
   release:
+    types:
+      - published
+      - released
+      - created
 
 env:
   IMAGE_NAME: kennylouie/gha
