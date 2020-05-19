@@ -2,11 +2,9 @@ name: Publish Prod
 
 on:
   release:
-    types:
-      - published
 
 env:
-  IMAGE_NAME: test_github_tags
+  IMAGE_NAME: kennylouie/gha
 
 jobs:
   publish:
