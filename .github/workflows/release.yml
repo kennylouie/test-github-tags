@@ -20,7 +20,7 @@ jobs:
 
       - name: debug
         run: |
-          echo "${{ steps.changelog.outputs.changelog }}"
+          echo ${{ steps.generate-changelog.outputs.changelog }}
 
       - name: create release
         id: create_release
