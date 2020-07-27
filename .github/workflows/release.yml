@@ -33,6 +33,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: ${{ steps.generate-changelog.outputs.changelog }}
+          body: $(cat CHANGELOG.md)
           draft: false
           prerelease: false
