@@ -18,10 +18,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issues: "true"
-          unreleasedOnly: "true"
           pullRequests: "true"
           prWoLabels: "true"
-          unreleasedLabel: "true"
 
       - name: create release
         id: create_release
