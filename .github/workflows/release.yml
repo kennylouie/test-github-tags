@@ -29,5 +29,3 @@ jobs:
           body: "${{ steps.changelog.outputs.changelog }}"
           draft: false
           prerelease: false
-        run: |
-          echo "${{ steps.changelog.outputs.changelog }}"
