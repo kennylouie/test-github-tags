@@ -15,13 +15,12 @@ jobs:
       - name: generate change
         run: |
           git fetch --prune --unshallow
-          git status
-          echo ${{ github.ref }}
           export LATEST_TAG=$(git --no-pager tag | sort -V | tail -n1)
+          echo ${LATEST_TAG}
           export PREV_TAG=$(git --no-pager tag | sort -V | tail -n2 | head -n1)
+          echo ${PREV_TAG}
           git --no-pager log ${PREV_TAG}...${LATEST_TAG} --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit > CHANGE.md
-          ls
-          pwd
+          cat CHANGE.md
 
       - name: create release
         id: create_release
