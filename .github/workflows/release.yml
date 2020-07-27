@@ -18,9 +18,7 @@ jobs:
           export LATEST_TAG=$(git --no-pager tag | sort -V | tail -n1)
           export PREV_TAG=$(git --no-pager tag | sort -V | tail -n2 | head -n1)
 
-          echo "previous tag ${PREV_TAG}"
-          echo "latest tag ${LATEST_TAG}"
-          echo "git --no-pager log ${PREV_TAG}...${LATEST_TAG} --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit > CHANGE.md"
+          git --no-pager log ${PREV_TAG}...${LATEST_TAG} --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit
           git --no-pager log "${PREV_TAG}"..."${LATEST_TAG}" --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit > CHANGE.md
 
       - name: create release
