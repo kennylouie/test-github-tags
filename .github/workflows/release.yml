@@ -18,13 +18,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: debug
-        run: |
-          echo ${{ steps.generate-changelog.outputs.changelog }}
-          pwd
-          ls -al
-          cat CHANGELOG.md
-
       - name: create release
         id: create_release
         uses: actions/create-release@v1
