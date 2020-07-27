@@ -1,4 +1,4 @@
- name: cicd-release
+name: cicd-release
 
 on:
   push:
