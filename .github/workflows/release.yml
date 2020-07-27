@@ -1,4 +1,4 @@
-name: cicd-release
+ name: cicd-release
 
 on:
   push:
@@ -14,9 +14,10 @@ jobs:
 
       - name: generate changelog
         id: changelog
-        uses: kennylouie/github-changelog-generator-action@v2.1.4
+        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          output: test
 
       - name: create release
         id: create_release
