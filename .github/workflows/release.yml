@@ -14,7 +14,7 @@ jobs:
 
       - name: generate changelog
         id: changelog
-        uses: kennylouie/github-changelog-generator-action@v2.1.3
+        uses: kennylouie/generate-changelog-debug-do-not-install@v2.1.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
