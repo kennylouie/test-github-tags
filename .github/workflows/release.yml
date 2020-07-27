@@ -21,6 +21,9 @@ jobs:
       - name: debug
         run: |
           echo ${{ steps.generate-changelog.outputs.changelog }}
+          pwd
+          ls -al
+          cat /github/workspace/CHANGELOG.md
 
       - name: create release
         id: create_release
