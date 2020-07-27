@@ -12,14 +12,16 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: generate changelog
-        id: generate-changelog
-        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issues: "true"
-          pullRequests: "true"
-          prWoLabels: "true"
+      - name: generate change
+        run: |
+          - git fetch --prune --unshallow
+          - git status
+          - echo ${{ github.ref }}
+          - export LATEST_TAG=$(git --no-pager tag | sort -V | tail -n1)
+          - export PREV_TAG=$(git --no-pager tag | sort -V | tail -n2 | head -n1)
+          - git log ${PREV_TAG}...${LATEST_TAG} --no-pager --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit > CHANGE.md
+          - ls
+          - pwd
 
       - name: create release
         id: create_release
@@ -29,6 +31,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body_path: CHANGELOG.md
+          body_path: CHANGE.md
           draft: false
           prerelease: false
