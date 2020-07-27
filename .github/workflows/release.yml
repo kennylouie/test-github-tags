@@ -14,7 +14,7 @@ jobs:
 
       - name: generate change
         run: |
-          git fetch --prune --unshallow
+          git fetch --tags --force
           git --no-pager tag
           export LATEST_TAG=$(git --no-pager tag | sort -V | tail -n1)
           echo ${LATEST_TAG}
