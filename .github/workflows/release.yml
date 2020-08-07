@@ -16,9 +16,14 @@ jobs:
         run: |
           git fetch --tags --force
           export LATEST_TAG=$(git --no-pager tag | sort -V | tail -n1)
+          echo $LATEST_TAG
           export PREV_TAG=$(git --no-pager tag | sort -V | tail -n2 | head -n1)
+          echo $PREV_TAG
 
-          git --no-pager log "${PREV_TAG}".."${LATEST_TAG}" --pretty=format:'%Cred%h%Creset - %s %C(bold blue)<%an>%Creset' --abbrev-commit > CHANGE.md
+          git --no-pager log
+          git --no-pager log $PREV_TAG..$LATEST_TAG
+          git --no-pager log "${PREV_TAG}".."${LATEST_TAG}" --pretty=format:'%Cred%h%Creset - %s %C(bold blue)<%an>%Creset' --abbrev-commit > CHANGELOG.md
+          cat CHANGELOG.md
 
       - name: create release
         id: create_release
@@ -28,6 +33,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body_path: CHANGE.md
+          body_path: CHANGELOG.md
           draft: false
           prerelease: false
