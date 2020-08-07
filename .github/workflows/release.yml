@@ -16,9 +16,7 @@ jobs:
         run: |
           git fetch --prune --unshallow --tags --force
           export LATEST_TAG=$(git --no-pager tag | sort -V | tail -n1)
-          echo $LATEST_TAG
           export PREV_TAG=$(git --no-pager tag | sort -V | tail -n2 | head -n1)
-          echo $PREV_TAG
 
           git --no-pager log
           git --no-pager log $PREV_TAG..$LATEST_TAG
