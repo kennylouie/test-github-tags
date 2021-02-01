@@ -22,7 +22,6 @@ jobs:
           MASTER_TAG=$(git describe origin/master)
           MASTER_TAG=${MASTER_TAG#v*}
           MASTER_TAG=${MASTER_TAG%%-*}
-          echo "::set-env name=MASTER_TAG::${MASTER_TAG}"
 
       - name: Publish docker image
         run: |
